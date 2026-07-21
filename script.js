@@ -53,3 +53,46 @@ async function laddaProjekt() {
 
 document.addEventListener('DOMContentLoaded', laddaSidinnehall);
 
+async function laddaMedia() {
+  const mediaContainer = document.querySelector('#media-grid');
+  if (!mediaContainer) return;
+
+  try {
+    // Om du skapat t.ex. ett inlägg som döpts efter titeln i Decap CMS,
+    // ersätter du filnamnet nedan med vad filen heter i content/media/ på GitHub.
+    // Tips: Du kan lägga till fler filnamn i listan efter hand!
+    const res = await fetch('/content/media/'); 
+    
+    // Om du vill testa direkt med en specificerad fil:
+    // Ange exakta namnet på JSON-filen som skapades under content/media/
+    const mediaFiles = ['min-video.json']; // <-- ÄNDRA HÄR till ditt filnamn
+
+    let mediaHTML = '';
+
+    for (const fileName of mediaFiles) {
+      try {
+        const itemRes = await fetch(`/content/media/${fileName}`);
+        if (itemRes.ok) {
+          const item = await itemRes.json();
+          mediaHTML += `
+            <div class="media-card">
+              <span class="media-type">${item.type || 'Media'}</span>
+              <h3>${item.title}</h3>
+              ${item.creator ? `<p class="media-creator">Av: ${item.creator}</p>` : ''}
+              ${item.review ? `<p class="media-review">${item.review}</p>` : ''}
+              ${item.link ? `<a href="${item.link}" target="_blank" class="media-link">Öppna / Se här ↗</a>` : ''}
+            </div>
+          `;
+        }
+      } catch (e) {
+        console.log("Kunde inte ladda mediafilen:", fileName);
+      }
+    }
+
+    if (mediaHTML !== '') {
+      mediaContainer.innerHTML = mediaHTML;
+    }
+  } catch (err) {
+    console.log("Kunde inte ladda media-sektionen.");
+  }
+}
