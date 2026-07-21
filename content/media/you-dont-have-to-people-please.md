@@ -1,0 +1,8 @@
+---
+title: You Don't Have To People Please
+type: YouTube
+creator: tannertan36
+link: https://youtu.be/s0_KTNMMjY8?si=vZ08RQCyznb_U23-
+image: https://youtu.be/s0_KTNMMjY8?si=vZ08RQCyznb_U23-
+date: 2026-07-21
+---
