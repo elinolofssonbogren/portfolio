@@ -436,3 +436,53 @@ footer {
   font-style: italic;
   margin-bottom: 0.5rem;
 }
+/* Media & Inspiration Grid */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.media-card {
+  border: 1px solid var(--border-color, #1a1a1a);
+  padding: 1.25rem;
+  background-color: var(--bg-card, #fff);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.media-type {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  opacity: 0.6;
+}
+
+.media-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.media-creator {
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.media-review {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.media-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: underline;
+}
