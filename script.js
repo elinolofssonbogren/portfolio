@@ -115,7 +115,6 @@ async function laddaMedia() {
         } else if (file.name.endsWith('.md')) {
           const rawText = await itemRes.text();
           
-          // Läs in rader och plocka ut alla fält
           const lines = rawText.split('\n');
           lines.forEach(line => {
             const trimmed = line.trim();
@@ -125,7 +124,7 @@ async function laddaMedia() {
             if (colonIndex !== -1) {
               const key = trimmed.slice(0, colonIndex).trim();
               let val = trimmed.slice(colonIndex + 1).trim();
-              val = val.replace(/^["']|["']$/g, ''); // Ta bort fnuttar
+              val = val.replace(/^["']|["']$/g, '');
               item[key] = val;
             }
           });
@@ -133,8 +132,12 @@ async function laddaMedia() {
           continue;
         }
 
+        // Kolla om bilden är en riktig bildfil och inte en youtube-länk
+        const harGiltigBild = item.image && !item.image.includes('youtu');
+
         mediaHTML += `
           <div class="media-card">
+            ${harGiltigBild ? `<div class="media-img-wrapper"><img src="${item.image}" alt="${item.title || 'Media'}"></div>` : ''}
             <span class="media-type">${item.type || 'Media'}</span>
             <h3>${item.title || 'Utan titel'}</h3>
             ${item.creator ? `<p class="media-creator">Av: ${item.creator}</p>` : ''}
