@@ -18,16 +18,34 @@ collections:
           - { label: "Undertext", name: "subtitle", widget: "string" }
           - { label: "Handskriven intro", name: "intro", widget: "string" }
 
-  # NY SAMLING: Projekt (Dynamisk lista)
+  # Samling för Projekt
   - name: "projects"
     label: "Projekt"
-    folder: "content/projects" # Alla projekt sparas som enskilda filer i denna mapp
-    create: true # Tillåter att du skapar NYA projekt
+    folder: "content/projects"
+    create: true
     slug: "{{slug}}"
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Kategori/Tagg", name: "category", widget: "string", default: "KONCEPT" }
       - { label: "År", name: "year", widget: "string", default: "2026" }
-      - { label: "Projektbild", name: "image", widget: "image" } # BILDUPPLADDNING
+      - { label: "Projektbild", name: "image", widget: "image" }
       - { label: "Beskrivning", name: "description", widget: "text", required: false }
       - { label: "Länk (Valfri)", name: "link", widget: "string", required: false }
+
+  # NY SAMLING: Media & Inspiration
+  - name: "media"
+    label: "Media & Inspiration"
+    folder: "content/media"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel / Namn", name: "title", widget: "string" }
+      - label: "Typ av media"
+        name: "type"
+        widget: "select"
+        options: ["YouTube", "Bok", "Artikel", "Podd", "Film/Serie"]
+      - { label: "Skapare / Författare", name: "creator", widget: "string", required: false }
+      - { label: "Länk (Valfri)", name: "link", widget: "string", required: false }
+      - { label: "Omslag/Bild (Valfri)", name: "image", widget: "image", required: false }
+      - { label: "Mina tankar / Betyg", name: "review", widget: "text", required: false }
+      - { label: "Datum tillagt", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
