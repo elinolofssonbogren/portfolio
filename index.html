@@ -81,3 +81,52 @@
         <section class="asymmetric-section">
             <div class="section-label">
                 <span>(03)</span>
+                <h2>MEDIA & INSPIRATION</h2>
+            </div>
+            <div class="section-content">
+                <div id="media-grid" class="media-grid">
+                    </div>
+            </div>
+        </section>
+
+        <section class="contact-block">
+            <span>(04) KONTAKT</span>
+            <h2>Låt oss skapa något.</h2>
+
+            <div class="contact-actions">
+                <a href="https://www.instagram.com/arkiv.beo" target="_blank" class="insta-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span>@arkiv.beo</span>
+                </a>
+
+                <a href="mailto:elinbogren@icloud.com" class="email-btn">elinbogren@icloud.com</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <span>ELIN OLOFSSON BOGREN</span>
+            <span>DESIGN, KOD & TEKNIK</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+</body>
+</html>
