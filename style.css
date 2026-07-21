@@ -1,155 +1,279 @@
-/* --- FÄRGER & ORGANISKA VARIABLER --- */
+/* --- GOOGLE FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
 :root {
-    --bg-color: #F3EFE6;       /* Varmt oblekt papper */
-    --card-bg: #EAE5DA;
-    --text-color: #1A1918;     /* Grafit / Tusch-svart */
-    --text-muted: #6B675E;
-    --border-color: #1A1918;   /* Tydlig grafitlinje */
-    --font-sans: 'Inter', sans-serif;
-    --font-serif: 'Instrument Serif', serif;
+  --bg-color: #f2ede4;         /* Varm creme/papyrus */
+  --card-bg: #ffffff;
+  --text-color: #1a1a1a;
+  --text-muted: #767268;
+  --accent-pink: #f192b3;      /* Bubbelgumrosa från referensen */
+  --border-color: #1a1a1a;
+  --font-mono: 'Space Mono', monospace;
+  --font-display: 'Fredoka', cursive;
 }
 
 body.dark-mode {
-    --bg-color: #141312;
-    --card-bg: #1E1D1B;
-    --text-color: #F3EFE6;
-    --text-muted: #9A958A;
-    --border-color: #F3EFE6;
+  --bg-color: #181716;
+  --card-bg: #242220;
+  --text-color: #f2ede4;
+  --text-muted: #a39e93;
+  --border-color: #f2ede4;
 }
 
-/* --- NOLLSTÄLLNING & PAPPERSTEXTUR --- */
+/* --- BASE STYLES --- */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: var(--font-sans);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.5;
-    padding: 0 3rem;
-    -webkit-font-smoothing: antialiased;
-
-    /* Subtil digital pappersstruktur via tonad gradient */
-    background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
-    background-size: 24px 24px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-mono);
+  padding: 2rem 4rem;
+  line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 /* --- NAVIGATION --- */
 .top-nav {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 2.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1.5px solid var(--border-color);
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    font-weight: 500;
-}
-
-.nav-left {
-    display: flex;
-    gap: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
 }
 
 .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.logo-link {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    font-weight: 500;
-    transition: color 0.2s ease;
+  color: var(--text-color);
+  text-decoration: none;
 }
 
-.nav-link:hover, .nav-link.active {
-    color: var(--text-color);
-    border-bottom: 1px solid var(--text-color);
-}
-
-.location {
-    color: var(--text-muted);
-}
-
-/* Handritad känsla på knappen */
 #theme-toggle {
-    background: transparent;
-    border: 1.5px solid var(--text-color);
-    padding: 0.4rem 1.2rem;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    color: var(--text-color);
-    cursor: pointer;
-    font-size: 0.65rem;
-    letter-spacing: 1.5px;
-    font-weight: 600;
+  background: transparent;
+  border: 1.5px solid var(--border-color);
+  padding: 0.3rem 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-color);
+  cursor: pointer;
 }
 
-#theme-toggle:hover {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-}
-
-/* --- HERO-SPLIT --- */
+/* --- HERO SECTION --- */
 .hero-split {
-    max-width: 1300px;
-    margin: 4rem auto 6rem auto;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 4rem;
-    align-items: end;
-}
-
-.tag {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-    display: block;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
+  margin-bottom: 5rem;
 }
 
 .hero-text-side h1 {
-    font-family: var(--font-serif);
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    font-weight: 400;
-    line-height: 1.02;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.5px;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6rem);
+  color: var(--accent-pink);
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
 }
 
 .hero-subtext {
-    font-size: 1.05rem;
-    color: var(--text-muted);
-    max-width: 480px;
-    font-weight: 300;
-    line-height: 1.6;
+  font-size: 1.1rem;
+  max-width: 500px;
+  color: var(--text-muted);
 }
 
-/* Galleri i Hero med ojämn handgjord ram */
-.hero-gallery-side {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 1.5rem;
-    align-items: end;
+/* --- SECTION HEADINGS --- */
+.asymmetric-section {
+  border-top: 2px solid var(--border-color);
+  padding-top: 3rem;
+  margin-bottom: 5rem;
 }
 
-.gallery-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px 225px 20px 255px/225px 20px 255px 20px;
+.section-label {
+  margin-bottom: 2rem;
+}
+
+.section-label span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.section-label h2 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--accent-pink);
+  letter-spacing: 0.5px;
+}
+
+/* --- PORTFOLIO & MEDIA GRIDS (3 KOLUMNER) --- */
+.portfolio-grid,
+#media-grid,
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+/* KORT-DESIGN: Tjock ram + Hård skugga */
+.project-item,
+.media-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  box-shadow: 5px 5px 0px var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-item:hover,
+.media-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px var(--border-color);
+}
+
+/* BILDER I KORT */
+.project-img-wrapper,
+.media-img-wrapper {
+  width: 100%;
+  height: 220px;
+  border: 1.5px solid var(--border-color);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background-color: #ddd;
+}
+
+.project-img-wrapper img,
+.media-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* MEDIA CONTENT STYLING */
+.media-type {
+  display: inline-block;
+  background: var(--border-color);
+  color: var(--bg-color);
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  text-transform: uppercase;
+  font-weight: bold;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.media-card h3, 
+.project-meta h3 {
+  font-size: 1.2rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.media-creator {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.media-link {
+  margin-top: 1rem;
+  color: var(--text-color);
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 0.85rem;
+}
+
+/* --- ANSLAGSTAVLA / GUESTBOOK --- */
+#guestbook-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#guest-input {
+  padding: 0.8rem;
+  background: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-color);
+  font-family: var(--font-mono);
+  flex: 1;
+}
+
+#guestbook-form button {
+  background: var(--border-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.note {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  padding: 0.8rem 1.2rem;
+  box-shadow: 3px 3px 0px var(--border-color);
+}
+
+/* --- KONTAKT & FOOTER --- */
+.contact-block {
+  border-top: 2px solid var(--border-color);
+  padding-top: 4rem;
+  margin-top: 4rem;
+}
+
+.contact-block h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--accent-pink);
+  margin-bottom: 1.5rem;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.insta-pill, .email-btn {
+  color: var(--text-color);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 5rem;
+  border-top: 2px solid var(--border-color);
+  padding-top: 2rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* RESPONSIVITET FÖR MOBIL */
+@media (max-width: 768px) {
+  body {
+    padding: 1.5rem;
+  }
+  .portfolio-grid, #media-grid, .media-grid {
+    grid-template-columns: 1fr;
+  }
+}
