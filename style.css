@@ -1,0 +1,407 @@
+/* --- FÄRGER & ORGANISKA VARIABLER --- */
+:root {
+    --bg-color: #F3EFE6;       /* Varmt oblekt papper */
+    --card-bg: #EAE5DA;
+    --text-color: #1A1918;     /* Grafit / Tusch-svart */
+    --text-muted: #6B675E;
+    --border-color: #1A1918;   /* Tydlig grafitlinje */
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Instrument Serif', serif;
+}
+
+body.dark-mode {
+    --bg-color: #141312;
+    --card-bg: #1E1D1B;
+    --text-color: #F3EFE6;
+    --text-muted: #9A958A;
+    --border-color: #F3EFE6;
+}
+
+/* --- NOLLSTÄLLNING & PAPPERSTEXTUR --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    padding: 0 3rem;
+    -webkit-font-smoothing: antialiased;
+
+    /* Subtil digital pappersstruktur via tonad gradient */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
+    background-size: 24px 24px;
+}
+
+/* --- NAVIGATION --- */
+.top-nav {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid var(--border-color);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+.nav-left {
+    display: flex;
+    gap: 2rem;
+}
+
+.location {
+    color: var(--text-muted);
+}
+
+/* Handritad känsla på knappen */
+#theme-toggle {
+    background: transparent;
+    border: 1.5px solid var(--text-color);
+    padding: 0.4rem 1.2rem;
+    /* Varierande radie skapar en organisk form */
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+#theme-toggle:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+/* --- HERO-SPLIT --- */
+.hero-split {
+    max-width: 1300px;
+    margin: 4rem auto 6rem auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: end;
+}
+
+.tag {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.hero-text-side h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.02;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+.hero-subtext {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 480px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+/* Galleri i Hero med ojämn handgjord ram */
+.hero-gallery-side {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.5rem;
+    align-items: end;
+}
+
+.gallery-card {
+    position: relative;
+    overflow: hidden;
+    /* Asymmetriska hörn för "klippt" känsla */
+    border-radius: 20px 225px 20px 255px/225px 20px 255px 20px;
+    border: 1px solid var(--border-color);
+}
+
+.gallery-card img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    filter: sepia(10%) contrast(95%); /* Mjukare analog ton */
+    transition: transform 0.5s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.03);
+}
+
+.card-large img {
+    height: 380px;
+}
+
+.card-small img {
+    height: 240px;
+}
+
+.card-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 1px;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+/* --- SEKTIONER MED HANDGJORDA LINJER --- */
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+}
+
+.asymmetric-section {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    border-top: 1.5px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.section-label span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.section-label h2 {
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.large-editorial-text {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    line-height: 1.3;
+    max-width: 800px;
+}
+
+/* --- PORTFOLIO GRID --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+}
+
+.project-item {
+    cursor: pointer;
+}
+
+.project-img-wrapper {
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.project-img-wrapper img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.project-item:hover .project-img-wrapper img {
+    transform: scale(1.03);
+}
+
+.project-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.project-meta h3 {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.project-meta span {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+/* --- ANSLAGSTAVLA --- */
+#guestbook-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin-bottom: 1.5rem;
+}
+
+#guest-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--text-color);
+    padding: 0.6rem 0;
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    outline: none;
+}
+
+#guestbook-form button {
+    background: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.note {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    font-size: 0.85rem;
+    background-color: var(--card-bg);
+}
+
+/* --- KONTAKT --- */
+.contact-block {
+    border-top: 1.5px solid var(--border-color);
+    padding-top: 4rem;
+    text-align: center;
+}
+
+.contact-block span {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.contact-block h2 {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    margin: 0.5rem 0 2rem 0;
+    font-weight: 400;
+}
+
+.contact-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.insta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.7rem 1.6rem;
+    border: 1.5px solid var(--text-color);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.insta-pill:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+
+.email-btn {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--text-color);
+}
+
+/* --- FOOTER --- */
+footer {
+    max-width: 1300px;
+    margin: 6rem auto 3rem auto;
+    border-top: 1.5px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+/* RESPONSIVITET FÖR MOBIL */
+@media (max-width: 900px) {
+    body {
+        padding: 0 1.5rem;
+    }
+    .hero-split, .asymmetric-section, .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    .contact-actions {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+/* Länkar i navigeringen */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+}
