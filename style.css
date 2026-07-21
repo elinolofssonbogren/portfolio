@@ -486,3 +486,24 @@ footer {
   color: inherit;
   text-decoration: underline;
 }
+
+/* Gör så att mediekortet håller ihop bilden och allt innehåll */
+.media-card {
+  overflow: hidden; /* Döljer bilddelar som sticker ut */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Anpassa bilden så att den alltid passar perfekt i kortet */
+.media-img-wrapper {
+  width: 100%;
+  max-height: 200px; /* Anpassa höjden om du vill ha den högre/lägre */
+  overflow: hidden;
+}
+
+.media-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Beskär bilden snyggt utan att göra den utdragen */
+  display: block;
+}
