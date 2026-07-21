@@ -32,25 +32,29 @@ async function laddaSidinnehall() {
     console.log("Kunde inte ladda statisk text.");
   }
 
-  // 2. Kör både Projekt och Media
+  // 2. Ladda projekt och media automatiskt
   laddaProjekt();
-  laddaMedia(); // <-- HÄR! Denna saknades tidigare
+  laddaMedia();
 }
 
 async function laddaProjekt() {
   const gridContainer = document.querySelector('.portfolio-grid');
   if (!gridContainer) return;
 
-  // Lägg till dina projektfiler från content/projects/ här
-  const projectFiles = ['.gitkeep']; // Byts ut mot riktiga filer efter hand
-
   try {
+    // Ändra länken nedan till din GitHub användare och repo om du vill att även projekt laddas helt automatiskt
+    const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/projects');
+    if (!res.ok) return;
+
+    const files = await res.json();
     let projectsHTML = '';
-    for (const fileName of projectFiles) {
-      if (fileName.endsWith('.gitkeep')) continue;
-      const res = await fetch(`/content/projects/${fileName}`);
-      if (res.ok) {
-        const p = await res.json();
+
+    for (const file of files) {
+      if (file.name === '.gitkeep' || !file.name.endsWith('.json')) continue;
+
+      const itemRes = await fetch(`/content/projects/${file.name}`);
+      if (itemRes.ok) {
+        const p = await itemRes.json();
         projectsHTML += `
           <article class="project-item">
               <div class="project-img-wrapper">
@@ -64,6 +68,7 @@ async function laddaProjekt() {
         `;
       }
     }
+
     if (projectsHTML !== '') gridContainer.innerHTML = projectsHTML;
   } catch (err) {
     console.log("Använder standardprojekt.");
@@ -74,15 +79,23 @@ async function laddaMedia() {
   const mediaContainer = document.querySelector('#media-grid');
   if (!mediaContainer) return;
 
-  // ⚠️ OBS! Ändra namnet nedan till vad filen heter i mappen content/media/ på GitHub!
-  // Exempel: Om du sparade ett inlägg i Decap CMS skapades t.ex. 'min-youtube-video.json'
-  const mediaFiles = ['min-video.json']; 
+  try {
+    // ⚠️ ÄNDRA DITT_GITHUB_ANVÄNDARNAMN OCH DITT_REPO_NAMN NEDAN!
+    const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/media');
+    
+    if (!res.ok) {
+      console.log("Kunde inte hämta medialistan automatiskt.");
+      return;
+    }
 
-  let mediaHTML = '';
+    const files = await res.json();
+    let mediaHTML = '';
 
-  for (const fileName of mediaFiles) {
-    try {
-      const itemRes = await fetch(`/content/media/${fileName}`);
+    // Loopar igenom alla filer i content/media automatiskt
+    for (const file of files) {
+      if (file.name === '.gitkeep' || !file.name.endsWith('.json')) continue;
+
+      const itemRes = await fetch(`/content/media/${file.name}`);
       if (itemRes.ok) {
         const item = await itemRes.json();
         mediaHTML += `
@@ -95,13 +108,13 @@ async function laddaMedia() {
           </div>
         `;
       }
-    } catch (e) {
-      console.log("Kunde inte ladda mediafilen:", fileName);
     }
-  }
 
-  if (mediaHTML !== '') {
-    mediaContainer.innerHTML = mediaHTML;
+    if (mediaHTML !== '') {
+      mediaContainer.innerHTML = mediaHTML;
+    }
+  } catch (err) {
+    console.log("Fel vid automatisk inläsning av media:", err);
   }
 }
 
