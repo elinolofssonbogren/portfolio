@@ -2,11 +2,11 @@ backend:
   name: git-gateway
   branch: main # Ändra till master om din branch heter det på GitHub
 
-media_folder: "images" # Mappen där uppladdade bilder sparas
+media_folder: "images"
 public_folder: "/images"
 
 collections:
-  # Vår befintliga samling för fasta sidor
+  # 1. Statiska sidor (Startsidan)
   - name: "pages"
     label: "Sidor"
     files:
@@ -18,7 +18,7 @@ collections:
           - { label: "Undertext", name: "subtitle", widget: "string" }
           - { label: "Handskriven intro", name: "intro", widget: "string" }
 
-  # Samling för Projekt
+  # 2. Dina egna projekt
   - name: "projects"
     label: "Projekt"
     folder: "content/projects"
@@ -32,7 +32,7 @@ collections:
       - { label: "Beskrivning", name: "description", widget: "text", required: false }
       - { label: "Länk (Valfri)", name: "link", widget: "string", required: false }
 
-  # NY SAMLING: Media & Inspiration
+  # 3. Media & Inspiration (YouTube, böcker, poddar m.m.)
   - name: "media"
     label: "Media & Inspiration"
     folder: "content/media"
