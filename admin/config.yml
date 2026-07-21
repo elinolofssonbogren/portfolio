@@ -1,11 +1,12 @@
 backend:
   name: git-gateway
-  branch: main # Ändra till 'master' om din huvudbranch heter master på GitHub
+  branch: main # Ändra till master om din branch heter det på GitHub
 
-media_folder: "images"
+media_folder: "images" # Mappen där uppladdade bilder sparas
 public_folder: "/images"
 
 collections:
+  # Vår befintliga samling för fasta sidor
   - name: "pages"
     label: "Sidor"
     files:
@@ -17,24 +18,16 @@ collections:
           - { label: "Undertext", name: "subtitle", widget: "string" }
           - { label: "Handskriven intro", name: "intro", widget: "string" }
 
-      - file: "content/cv.json"
-        label: "CV Sida (Text)"
-        name: "cv"
-        fields:
-          - { label: "Rubrik", name: "title", widget: "string" }
-          - { label: "Handskriven intro", name: "intro", widget: "string" }
-          - label: "Utbildningar"
-            name: "education"
-            widget: "list"
-            fields:
-              - { label: "Period", name: "period", widget: "string" }
-              - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Skola/Plats", name: "institution", widget: "string" }
-          - label: "Arbetslivserfarenhet"
-            name: "experience"
-            widget: "list"
-            fields:
-              - { label: "Period", name: "period", widget: "string" }
-              - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Arbetsgivare", name: "institution", widget: "string" }
-              - { label: "Beskrivning", name: "description", widget: "text", required: false }
+  # NY SAMLING: Projekt (Dynamisk lista)
+  - name: "projects"
+    label: "Projekt"
+    folder: "content/projects" # Alla projekt sparas som enskilda filer i denna mapp
+    create: true # Tillåter att du skapar NYA projekt
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Kategori/Tagg", name: "category", widget: "string", default: "KONCEPT" }
+      - { label: "År", name: "year", widget: "string", default: "2026" }
+      - { label: "Projektbild", name: "image", widget: "image" } # BILDUPPLADDNING
+      - { label: "Beskrivning", name: "description", widget: "text", required: false }
+      - { label: "Länk (Valfri)", name: "link", widget: "string", required: false }
