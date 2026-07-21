@@ -277,3 +277,43 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* Se till att hela sidan får använda hela bredden */
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 2rem 5vw; /* Ger lagom marginal på sidorna */
+}
+
+/* Huvudbehållaren ska ta full bredd */
+main {
+  width: 100%;
+  max-width: 1200px; /* Eller 1400px om du vill ha ännu bredare */
+  margin: 0 auto;
+}
+
+/* Tvinga sektionerna att bredda ut sig */
+.asymmetric-section,
+.hero-split,
+.portfolio-grid,
+#media-grid,
+.media-grid {
+  width: 100%;
+}
+
+/* Sätt upp Media-sektionen i ett snyggt grid som fyller ut bredden */
+#media-grid,
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Minst 320px per kort, fyller ut resten */
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Projekt-grid (t.ex. dina bilder högre upp) */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 2.5rem;
+}
