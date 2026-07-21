@@ -104,7 +104,6 @@ async function laddaMedia() {
     let mediaHTML = '';
 
     for (const file of files) {
-      // Hoppa över dolda filer som .gitkeep
       if (file.name.startsWith('.')) continue;
 
       const itemRes = await fetch(`/content/media/${file.name}`);
@@ -115,11 +114,19 @@ async function laddaMedia() {
           item = await itemRes.json();
         } else if (file.name.endsWith('.md')) {
           const rawText = await itemRes.text();
-          // Läs ut nycklar/värden från Markdown Frontmatter
-          rawText.split('\n').forEach(line => {
-            const [key, ...valueParts] = line.split(':');
-            if (key && valueParts.length > 0) {
-              item[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+          
+          // Läs in rader och plocka ut alla fält
+          const lines = rawText.split('\n');
+          lines.forEach(line => {
+            const trimmed = line.trim();
+            if (trimmed === '---' || !trimmed) return;
+
+            const colonIndex = trimmed.indexOf(':');
+            if (colonIndex !== -1) {
+              const key = trimmed.slice(0, colonIndex).trim();
+              let val = trimmed.slice(colonIndex + 1).trim();
+              val = val.replace(/^["']|["']$/g, ''); // Ta bort fnuttar
+              item[key] = val;
             }
           });
         } else {
