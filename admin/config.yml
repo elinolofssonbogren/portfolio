@@ -1,1 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main # Ändra till 'master' om din huvudbranch heter master på GitHub
 
+media_folder: "images" # Mapp där uppladdade bilder sparas
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Sidor"
+    files:
+      - file: "index.html"
+        label: "Startsida"
+        name: "index"
+      - file: "cv.html"
+        label: "CV Sida"
+        name: "cv"
