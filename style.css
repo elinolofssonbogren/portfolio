@@ -405,3 +405,34 @@ footer {
     color: var(--text-color);
     border-bottom: 1px solid var(--text-color);
 }
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.media-card {
+  border: 1px solid var(--border-color, #ccc);
+  padding: 1rem;
+  background-color: var(--bg-card, #fff);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.media-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.media-card h4 {
+  margin: 0.5rem 0 0.25rem 0;
+}
+
+.media-creator {
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
