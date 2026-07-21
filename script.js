@@ -42,7 +42,6 @@ async function laddaProjekt() {
   if (!gridContainer) return;
 
   try {
-    // Ändra länken nedan till din GitHub användare och repo om du vill att även projekt laddas helt automatiskt
     const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/projects');
     if (!res.ok) return;
 
@@ -50,19 +49,33 @@ async function laddaProjekt() {
     let projectsHTML = '';
 
     for (const file of files) {
-      if (file.name === '.gitkeep' || !file.name.endsWith('.json')) continue;
+      if (file.name.startsWith('.')) continue;
 
       const itemRes = await fetch(`/content/projects/${file.name}`);
       if (itemRes.ok) {
-        const p = await itemRes.json();
+        let p = {};
+        if (file.name.endsWith('.json')) {
+          p = await itemRes.json();
+        } else if (file.name.endsWith('.md')) {
+          const rawText = await itemRes.text();
+          rawText.split('\n').forEach(line => {
+            const [key, ...valueParts] = line.split(':');
+            if (key && valueParts.length > 0) {
+              p[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+            }
+          });
+        } else {
+          continue;
+        }
+
         projectsHTML += `
           <article class="project-item">
               <div class="project-img-wrapper">
-                  <img src="${p.image || 'https://picsum.photos/700/500'}" alt="${p.title}">
+                  <img src="${p.image || 'https://picsum.photos/700/500'}" alt="${p.title || 'Projekt'}">
               </div>
               <div class="project-meta">
-                  <h3>${p.title}</h3>
-                  <span>${p.year || p.category}</span>
+                  <h3>${p.title || 'Utan titel'}</h3>
+                  <span>${p.year || p.category || ''}</span>
               </div>
           </article>
         `;
@@ -80,7 +93,6 @@ async function laddaMedia() {
   if (!mediaContainer) return;
 
   try {
-    // ⚠️ ÄNDRA DITT_GITHUB_ANVÄNDARNAMN OCH DITT_REPO_NAMN NEDAN!
     const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/media');
     
     if (!res.ok) {
@@ -91,17 +103,33 @@ async function laddaMedia() {
     const files = await res.json();
     let mediaHTML = '';
 
-    // Loopar igenom alla filer i content/media automatiskt
     for (const file of files) {
-      if (file.name === '.gitkeep' || !file.name.endsWith('.json')) continue;
+      // Hoppa över dolda filer som .gitkeep
+      if (file.name.startsWith('.')) continue;
 
       const itemRes = await fetch(`/content/media/${file.name}`);
       if (itemRes.ok) {
-        const item = await itemRes.json();
+        let item = {};
+        
+        if (file.name.endsWith('.json')) {
+          item = await itemRes.json();
+        } else if (file.name.endsWith('.md')) {
+          const rawText = await itemRes.text();
+          // Läs ut nycklar/värden från Markdown Frontmatter
+          rawText.split('\n').forEach(line => {
+            const [key, ...valueParts] = line.split(':');
+            if (key && valueParts.length > 0) {
+              item[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+            }
+          });
+        } else {
+          continue;
+        }
+
         mediaHTML += `
           <div class="media-card">
             <span class="media-type">${item.type || 'Media'}</span>
-            <h3>${item.title}</h3>
+            <h3>${item.title || 'Utan titel'}</h3>
             ${item.creator ? `<p class="media-creator">Av: ${item.creator}</p>` : ''}
             ${item.review ? `<p class="media-review">${item.review}</p>` : ''}
             ${item.link ? `<a href="${item.link}" target="_blank" class="media-link">Öppna / Se här ↗</a>` : ''}
