@@ -2,16 +2,39 @@ backend:
   name: git-gateway
   branch: main # Ändra till 'master' om din huvudbranch heter master på GitHub
 
-media_folder: "images" # Mapp där uppladdade bilder sparas
+media_folder: "images"
 public_folder: "/images"
 
 collections:
   - name: "pages"
     label: "Sidor"
     files:
-      - file: "index.html"
-        label: "Startsida"
+      - file: "content/index.json"
+        label: "Startsida (Text)"
         name: "index"
-      - file: "cv.html"
-        label: "CV Sida"
+        fields:
+          - { label: "Rubrik", name: "title", widget: "string" }
+          - { label: "Undertext", name: "subtitle", widget: "string" }
+          - { label: "Handskriven intro", name: "intro", widget: "string" }
+
+      - file: "content/cv.json"
+        label: "CV Sida (Text)"
         name: "cv"
+        fields:
+          - { label: "Rubrik", name: "title", widget: "string" }
+          - { label: "Handskriven intro", name: "intro", widget: "string" }
+          - label: "Utbildningar"
+            name: "education"
+            widget: "list"
+            fields:
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Skola/Plats", name: "institution", widget: "string" }
+          - label: "Arbetslivserfarenhet"
+            name: "experience"
+            widget: "list"
+            fields:
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Arbetsgivare", name: "institution", widget: "string" }
+              - { label: "Beskrivning", name: "description", widget: "text", required: false }
