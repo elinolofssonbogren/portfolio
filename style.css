@@ -57,6 +57,32 @@ body {
     gap: 2rem;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+}
+
 .location {
     color: var(--text-muted);
 }
@@ -66,7 +92,6 @@ body {
     background: transparent;
     border: 1.5px solid var(--text-color);
     padding: 0.4rem 1.2rem;
-    /* Varierande radie skapar en organisk form */
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
     color: var(--text-color);
     cursor: pointer;
@@ -127,383 +152,4 @@ body {
 .gallery-card {
     position: relative;
     overflow: hidden;
-    /* Asymmetriska hörn för "klippt" känsla */
     border-radius: 20px 225px 20px 255px/225px 20px 255px 20px;
-    border: 1px solid var(--border-color);
-}
-
-.gallery-card img {
-    width: 100%;
-    display: block;
-    object-fit: cover;
-    filter: sepia(10%) contrast(95%); /* Mjukare analog ton */
-    transition: transform 0.5s ease;
-}
-
-.gallery-card:hover img {
-    transform: scale(1.03);
-}
-
-.card-large img {
-    height: 380px;
-}
-
-.card-small img {
-    height: 240px;
-}
-
-.card-tag {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    background: var(--bg-color);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    font-size: 0.65rem;
-    padding: 0.2rem 0.6rem;
-    letter-spacing: 1px;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-}
-
-/* --- SEKTIONER MED HANDGJORDA LINJER --- */
-main {
-    max-width: 1300px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 6rem;
-}
-
-.asymmetric-section {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2rem;
-    border-top: 1.5px solid var(--border-color);
-    padding-top: 2rem;
-}
-
-.section-label span {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.section-label h2 {
-    font-size: 0.8rem;
-    letter-spacing: 1.5px;
-    font-weight: 600;
-}
-
-.large-editorial-text {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    line-height: 1.3;
-    max-width: 800px;
-}
-
-/* --- PORTFOLIO GRID --- */
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-}
-
-.project-item {
-    cursor: pointer;
-}
-
-.project-img-wrapper {
-    overflow: hidden;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-}
-
-.project-img-wrapper img {
-    width: 100%;
-    height: 360px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
-
-.project-item:hover .project-img-wrapper img {
-    transform: scale(1.03);
-}
-
-.project-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.5rem;
-}
-
-.project-meta h3 {
-    font-size: 1.1rem;
-    font-weight: 400;
-}
-
-.project-meta span {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-}
-
-/* --- ANSLAGSTAVLA --- */
-#guestbook-form {
-    display: flex;
-    gap: 1rem;
-    max-width: 500px;
-    margin-bottom: 1.5rem;
-}
-
-#guest-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    border-bottom: 1.5px solid var(--text-color);
-    padding: 0.6rem 0;
-    color: var(--text-color);
-    font-family: var(--font-sans);
-    outline: none;
-}
-
-#guestbook-form button {
-    background: var(--text-color);
-    color: var(--bg-color);
-    border: none;
-    padding: 0.6rem 1.4rem;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    font-size: 0.65rem;
-    letter-spacing: 1.5px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.notes-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-}
-
-.note {
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1rem;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    font-size: 0.85rem;
-    background-color: var(--card-bg);
-}
-
-/* --- KONTAKT --- */
-.contact-block {
-    border-top: 1.5px solid var(--border-color);
-    padding-top: 4rem;
-    text-align: center;
-}
-
-.contact-block span {
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-}
-
-.contact-block h2 {
-    font-family: var(--font-serif);
-    font-size: 4rem;
-    margin: 0.5rem 0 2rem 0;
-    font-weight: 400;
-}
-
-.contact-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-}
-
-.insta-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0.7rem 1.6rem;
-    border: 1.5px solid var(--text-color);
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.insta-pill:hover {
-    background: var(--text-color);
-    color: var(--bg-color);
-}
-
-.email-btn {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    color: var(--text-color);
-    text-decoration: none;
-    border-bottom: 1.5px solid var(--text-color);
-}
-
-/* --- FOOTER --- */
-footer {
-    max-width: 1300px;
-    margin: 6rem auto 3rem auto;
-    border-top: 1.5px solid var(--border-color);
-    padding-top: 2rem;
-}
-
-.footer-inner {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-}
-
-/* RESPONSIVITET FÖR MOBIL */
-@media (max-width: 900px) {
-    body {
-        padding: 0 1.5rem;
-    }
-    .hero-split, .asymmetric-section, .portfolio-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-    .contact-actions {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-}
-/* Länkar i navigeringen */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.logo-link {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.nav-link:hover, .nav-link.active {
-    color: var(--text-color);
-    border-bottom: 1px solid var(--text-color);
-}
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-
-.media-card {
-  border: 1px solid var(--border-color, #ccc);
-  padding: 1rem;
-  background-color: var(--bg-card, #fff);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.media-tag {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.7;
-}
-
-.media-card h4 {
-  margin: 0.5rem 0 0.25rem 0;
-}
-
-.media-creator {
-  font-size: 0.85rem;
-  font-style: italic;
-  margin-bottom: 0.5rem;
-}
-/* Media & Inspiration Grid */
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.media-card {
-  border: 1px solid var(--border-color, #1a1a1a);
-  padding: 1.25rem;
-  background-color: var(--bg-card, #fff);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.media-type {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  opacity: 0.6;
-}
-
-.media-card h3 {
-  margin: 0;
-  font-size: 1.1rem;
-}
-
-.media-creator {
-  font-size: 0.85rem;
-  font-style: italic;
-  margin: 0;
-  opacity: 0.8;
-}
-
-.media-review {
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  line-height: 1.4;
-}
-
-.media-link {
-  display: inline-block;
-  margin-top: 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: inherit;
-  text-decoration: underline;
-}
-
-/* Gör så att mediekortet håller ihop bilden och allt innehåll */
-.media-card {
-  overflow: hidden; /* Döljer bilddelar som sticker ut */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Anpassa bilden så att den alltid passar perfekt i kortet */
-.media-img-wrapper {
-  width: 100%;
-  max-height: 200px; /* Anpassa höjden om du vill ha den högre/lägre */
-  overflow: hidden;
-}
-
-.media-img-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Beskär bilden snyggt utan att göra den utdragen */
-  display: block;
-}
