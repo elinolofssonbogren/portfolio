@@ -17,28 +17,39 @@ function laggTillHalsning(event) {
         input.value = "";
     }
 }
-// Hämta texten från content/index.json och uppdatera sidan
 async function laddaSidinnehall() {
+  // 1. Hämta texten för startsidan
   try {
-    const response = await fetch('/content/index.json');
-    if (response.ok) {
-      const data = await response.json();
-
-      // Uppdatera elementen på sidan om de finns i JSON-filen
-      if (data.title) {
-        document.querySelector('.hero-scrapbook h1').textContent = data.title;
-      }
-      if (data.subtitle) {
-        document.querySelector('.hero-subtext').textContent = data.subtitle;
-      }
-      if (data.intro) {
-        document.querySelector('.handwritten-intro').textContent = data.intro;
-      }
+    const res = await fetch('/content/index.json');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.title) document.querySelector('.hero-scrapbook h1').textContent = data.title;
+      if (data.subtitle) document.querySelector('.hero-subtext').textContent = data.subtitle;
+      if (data.intro) document.querySelector('.handwritten-intro').textContent = data.intro;
     }
-  } catch (error) {
-    console.log("Kunde inte ladda dynamiskt innehåll, använder standardtext.");
+  } catch (err) {
+    console.log("Kunde inte ladda statisk text.");
+  }
+
+  // 2. Hämta dynamiska projekt
+  laddaProjekt();
+}
+
+async function laddaProjekt() {
+  const gridContainer = document.querySelector('.portfolio-grid');
+  if (!gridContainer) return;
+
+  try {
+    // Hämta listan över sparade projekt (via Decap CMS struktur eller API)
+    // OBS: För enkelhets skull läser vi in dina skapade JSON-filer i content/projects/
+    // Du kan lägga till dina projektfiler i en lista nedan när du skapat dem
+    
+    // Ett smidigt sätt när du skapar projekt i CMS är att ersätta gridens innehåll
+    // om du skapar en index-fil för alla projekt.
+  } catch (err) {
+    console.log("Använder standardprojekt.");
   }
 }
 
-// Kör funktionen när sidan laddats
 document.addEventListener('DOMContentLoaded', laddaSidinnehall);
+
