@@ -1,23 +1,47 @@
+let allMediaData = []; // Sparar all data för filtrering
+
 function skiftaTema() {
   document.body.classList.toggle("dark-mode");
 }
 
+/* ==========================================
+   ANSLAGSTAVLA (LOCALSTORAGE)
+   ========================================== */
 function laggTillHalsning(event) {
   event.preventDefault();
 
   const input = document.getElementById("guest-input");
-  const container = document.getElementById("notes-container");
-
   if (input.value.trim() !== "") {
-    const newNote = document.createElement("div");
-    newNote.className = "note";
-    newNote.textContent = input.value;
+    const txt = input.value.trim();
+    
+    skapaNoteElement(txt);
 
-    container.prepend(newNote);
+    // Spara i LocalStorage
+    const sparade = JSON.parse(localStorage.getItem("guestbook")) || [];
+    sparade.unshift(txt);
+    localStorage.setItem("guestbook", JSON.stringify(sparade));
+
     input.value = "";
   }
 }
 
+function skapaNoteElement(text) {
+  const container = document.getElementById("notes-container");
+  if (!container) return;
+  const newNote = document.createElement("div");
+  newNote.className = "note";
+  newNote.textContent = text;
+  container.prepend(newNote);
+}
+
+function laddaGuestbook() {
+  const sparade = JSON.parse(localStorage.getItem("guestbook")) || ["Välkommen till mitt digitala arkiv!"];
+  sparade.reverse().forEach(text => skapaNoteElement(text));
+}
+
+/* ==========================================
+   LADDA SIDINNEHÅLL
+   ========================================== */
 async function laddaSidinnehall() {
   try {
     const res = await fetch('/content/index.json');
@@ -33,6 +57,7 @@ async function laddaSidinnehall() {
 
   laddaProjekt();
   laddaMedia();
+  laddaGuestbook();
 }
 
 async function laddaProjekt() {
@@ -86,20 +111,19 @@ async function laddaProjekt() {
   }
 }
 
+/* ==========================================
+   MEDIA OCH FILTRERING
+   ========================================== */
 async function laddaMedia() {
   const mediaContainer = document.querySelector('#media-grid');
   if (!mediaContainer) return;
 
   try {
     const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/media');
-    
-    if (!res.ok) {
-      console.log("Kunde inte hämta medialistan automatiskt.");
-      return;
-    }
+    if (!res.ok) return;
 
     const files = await res.json();
-    let mediaHTML = '';
+    allMediaData = [];
 
     for (const file of files) {
       if (file.name.startsWith('.')) continue;
@@ -107,22 +131,17 @@ async function laddaMedia() {
       const itemRes = await fetch(`/content/media/${file.name}`);
       if (itemRes.ok) {
         let item = {};
-        
         if (file.name.endsWith('.json')) {
           item = await itemRes.json();
         } else if (file.name.endsWith('.md')) {
           const rawText = await itemRes.text();
-          
-          const lines = rawText.split('\n');
-          lines.forEach(line => {
+          rawText.split('\n').forEach(line => {
             const trimmed = line.trim();
             if (trimmed === '---' || !trimmed) return;
-
             const colonIndex = trimmed.indexOf(':');
             if (colonIndex !== -1) {
               const key = trimmed.slice(0, colonIndex).trim();
-              let val = trimmed.slice(colonIndex + 1).trim();
-              val = val.replace(/^["']|["']$/g, '');
+              let val = trimmed.slice(colonIndex + 1).trim().replace(/^["']|["']$/g, '');
               item[key] = val;
             }
           });
@@ -130,26 +149,53 @@ async function laddaMedia() {
           continue;
         }
 
-        const harGiltigBild = item.image && !item.image.includes('youtu');
-
-        mediaHTML += `
-          <div class="media-card">
-            ${harGiltigBild ? `<div class="media-img-wrapper"><img src="${item.image}" alt="${item.title || 'Media'}"></div>` : ''}
-            <span class="media-type">${item.type || 'Media'}</span>
-            <h3>${item.title || 'Utan titel'}</h3>
-            ${item.creator ? `<p class="media-creator">Av: ${item.creator}</p>` : ''}
-            ${item.review ? `<p class="media-review">${item.review}</p>` : ''}
-            ${item.link ? `<a href="${item.link}" target="_blank" class="media-link">Öppna / Se här ↗</a>` : ''}
-          </div>
-        `;
+        allMediaData.push(item);
       }
     }
 
-    if (mediaHTML !== '') {
-      mediaContainer.innerHTML = mediaHTML;
-    }
+    visaMedia(allMediaData);
   } catch (err) {
     console.log("Fel vid automatisk inläsning av media:", err);
+  }
+}
+
+function visaMedia(lista) {
+  const mediaContainer = document.querySelector('#media-grid');
+  if (!mediaContainer) return;
+
+  let mediaHTML = '';
+  lista.forEach(item => {
+    const harGiltigBild = item.image && !item.image.includes('youtu');
+
+    mediaHTML += `
+      <div class="media-card" data-type="${(item.type || '').toLowerCase()}">
+        ${harGiltigBild ? `<div class="media-img-wrapper"><img src="${item.image}" alt="${item.title || 'Media'}"></div>` : ''}
+        <span class="media-type">${item.type || 'Media'}</span>
+        <h3>${item.title || 'Utan titel'}</h3>
+        ${item.creator ? `<p class="media-creator">Av: ${item.creator}</p>` : ''}
+        ${item.review ? `<p class="media-review">${item.review}</p>` : ''}
+        ${item.link ? `<a href="${item.link}" target="_blank" class="media-link">Öppna / Se här ↗</a>` : ''}
+      </div>
+    `;
+  });
+
+  mediaContainer.innerHTML = mediaHTML || '<p>Ingen media hittades i denna kategori.</p>';
+}
+
+function filtreraMedia(kategori) {
+  // Uppdatera aktiv knapp
+  const knappar = document.querySelectorAll('.filter-btn');
+  knappar.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (kategori === 'alla') {
+    visaMedia(allMediaData);
+  } else {
+    const filtrerad = allMediaData.filter(item => {
+      const typ = (item.type || '').toLowerCase();
+      return typ.includes(kategori);
+    });
+    visaMedia(filtrerad);
   }
 }
 
