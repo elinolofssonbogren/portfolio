@@ -379,3 +379,30 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+/* ==========================================================================
+   FILTERKNAPPAR FÖR MEDIA
+   ========================================================================== */
+.filter-container {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 0.4rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--border-color);
+  color: var(--bg-color);
+}
