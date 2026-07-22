@@ -185,24 +185,27 @@ main {
   box-shadow: 8px 8px 0px var(--border-color);
 }
 
+/* BILDER I KORT */
 .project-img-wrapper,
 .media-img-wrapper {
   width: 100%;
   height: 220px;
   border: 1.5px solid var(--border-color);
-  overflow: hidden;
+  overflow: hidden; /* Klipper bort allt som hamnar utanför ramen */
   margin-bottom: 1rem;
   background-color: #ddd;
+  position: relative;
 }
 
+/* Tvingar ALLA bilder att stanna i ramen */
 .project-img-wrapper img,
 .media-img-wrapper img,
+.project-item img,
 .media-card img {
   width: 100% !important;
-  max-width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
-  display: block;
+  object-fit: cover !important; /* Gör så att bilden fyller rutan snyggt utan att bli skev */
+  display: block !important;
 }
 
 .media-type {
