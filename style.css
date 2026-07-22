@@ -191,10 +191,24 @@ main {
   width: 100%;
   height: 220px;
   border: 1.5px solid var(--border-color);
-  overflow: hidden; /* Klipper bort allt som hamnar utanför ramen */
+  overflow: hidden;
   margin-bottom: 1rem;
   background-color: #ddd;
   position: relative;
+}
+
+/* Om bilden inte kunde laddas (trasig länk) - visa en diskret text istället för tom ruta */
+.project-img-wrapper.bild-saknas::after {
+  content: "Bild saknas";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Tvingar ALLA bilder att stanna i ramen */
@@ -204,7 +218,7 @@ main {
 .media-card img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important; /* Gör så att bilden fyller rutan snyggt utan att bli skev */
+  object-fit: cover !important;
   display: block !important;
 }
 
