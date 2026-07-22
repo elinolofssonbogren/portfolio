@@ -1,25 +1,24 @@
 function skiftaTema() {
-    document.body.classList.toggle("dark-mode");
+  document.body.classList.toggle("dark-mode");
 }
 
 function laggTillHalsning(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const input = document.getElementById("guest-input");
-    const container = document.getElementById("notes-container");
+  const input = document.getElementById("guest-input");
+  const container = document.getElementById("notes-container");
 
-    if (input.value.trim() !== "") {
-        const newNote = document.createElement("div");
-        newNote.className = "note";
-        newNote.textContent = input.value;
+  if (input.value.trim() !== "") {
+    const newNote = document.createElement("div");
+    newNote.className = "note";
+    newNote.textContent = input.value;
 
-        container.prepend(newNote);
-        input.value = "";
-    }
+    container.prepend(newNote);
+    input.value = "";
+  }
 }
 
 async function laddaSidinnehall() {
-  // 1. Hämta texten för startsidan
   try {
     const res = await fetch('/content/index.json');
     if (res.ok) {
@@ -32,7 +31,6 @@ async function laddaSidinnehall() {
     console.log("Kunde inte ladda statisk text.");
   }
 
-  // 2. Ladda projekt och media automatiskt
   laddaProjekt();
   laddaMedia();
 }
@@ -132,7 +130,6 @@ async function laddaMedia() {
           continue;
         }
 
-        // Kolla om bilden är en riktig bildfil och inte en youtube-länk
         const harGiltigBild = item.image && !item.image.includes('youtu');
 
         mediaHTML += `
