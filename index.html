@@ -95,7 +95,7 @@
             <div id="media-filter" class="filter-container">
                 <button class="filter-btn active" onclick="filtreraMedia(event,'alla')">ALLT</button>
                 <button class="filter-btn" onclick="filtreraMedia(event,'bok')">BÖCKER</button>
-                <button class="filter-btn" onclick="filtreraMedia(event'podd')">PODDAR</button>
+                <button class="filter-btn" onclick="filtreraMedia(event,'podd')">PODDAR</button>
                 <button class="filter-btn" onclick="filtreraMedia(event,'film')">FILM/VIDEO</button>
             </div>
 
@@ -112,4 +112,34 @@
                 <a href="https://instagram.com/arkiv.beo" target="_blank" rel="noopener noreferrer" class="insta-pill">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    @arkiv.beo
+                </a>
+                <a href="mailto:elinbogren@icloud.com" class="email-btn">
+                    elinbogren@icloud.com
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        ELIN OLOFSSON BOGREN DESIGN, KOD &amp; TEKNIK
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+</body>
+</html>
