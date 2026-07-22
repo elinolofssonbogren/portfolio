@@ -8,10 +8,10 @@
   --card-bg: #ffffff;
   --text-color: #1a1a1a;
   --text-muted: #767268;
-  --accent-pink: #f192b3;       /* Bubbelgumrosa från referensen */
+  --accent-pink: #f192b3;       /* Bubbelgumrosa */
   --border-color: #1a1a1a;
   --font-mono: 'Space Mono', monospace;
-  --font-display: 'Shrikhand', cursive; /* Bubblig retro-font för rubriker */
+  --font-display: 'Shrikhand', cursive;
 }
 
 body.dark-mode {
@@ -35,7 +35,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-mono);
-  padding: 2rem 5vw; /* Skapar lagom med marginal på sidorna */
+  padding: 2rem 5vw;
   line-height: 1.5;
   font-size: 0.9rem;
   width: 100%;
@@ -43,14 +43,12 @@ body {
   margin: 0;
 }
 
-/* Huvudbehållaren som centrerar och sätter maxbredd på innehållet */
 main {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Se till att sektionerna använder hela den tillgängliga bredden */
 .asymmetric-section,
 .hero-split,
 .portfolio-grid,
@@ -167,7 +165,6 @@ main {
   margin-top: 2rem;
 }
 
-/* KORT-DESIGN: Tjock ram + Hård skugga */
 .project-item,
 .media-card {
   background: var(--card-bg);
@@ -179,3 +176,203 @@ main {
   justify-content: space-between;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
+  overflow: hidden;
+}
+
+.project-item:hover,
+.media-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px var(--border-color);
+}
+
+.project-img-wrapper,
+.media-img-wrapper {
+  width: 100%;
+  height: 220px;
+  border: 1.5px solid var(--border-color);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background-color: #ddd;
+}
+
+.project-img-wrapper img,
+.media-img-wrapper img,
+.media-card img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+.media-type {
+  display: inline-block;
+  background: var(--border-color);
+  color: var(--bg-color);
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  text-transform: uppercase;
+  font-weight: bold;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.media-card h3, 
+.project-meta h3 {
+  font-size: 1.2rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.media-creator {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.media-link {
+  margin-top: 1rem;
+  color: var(--text-color);
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   ANSLAGSTAVLA / GUESTBOOK
+   ========================================================================== */
+#guestbook-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#guest-input {
+  padding: 0.8rem;
+  background: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-color);
+  font-family: var(--font-mono);
+  flex: 1;
+}
+
+#guestbook-form button {
+  background: var(--border-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.note {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  padding: 0.8rem 1.2rem;
+  box-shadow: 3px 3px 0px var(--border-color);
+}
+
+/* ==========================================================================
+   KONTAKTSEKTION & FOOTER
+   ========================================================================== */
+.contact-block {
+  border-top: 2px solid var(--border-color);
+  padding-top: 4rem;
+  margin-top: 5rem;
+  text-align: left;
+}
+
+.contact-block span {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.contact-block h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  line-height: 1.05;
+}
+
+.contact-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.insta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.7rem 1.4rem;
+  border: 2px solid var(--border-color);
+  background-color: var(--card-bg);
+  box-shadow: 3px 3px 0px var(--border-color);
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.insta-pill:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--border-color);
+  background-color: var(--border-color);
+  color: var(--bg-color);
+}
+
+.email-btn {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-color);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.email-btn:hover {
+  color: var(--text-muted);
+}
+
+footer {
+  border-top: 2px solid var(--border-color);
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   RESPONSIVITET FÖR MOBILER
+   ========================================================================== */
+@media (max-width: 768px) {
+  body {
+    padding: 1.5rem;
+  }
+  .portfolio-grid, 
+  #media-grid, 
+  .media-grid {
+    grid-template-columns: 1fr;
+  }
+}
