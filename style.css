@@ -1,4 +1,6 @@
-/* --- GOOGLE FONTS --- */
+/* ==========================================================================
+   GOOGLE FONTS & VARIABLER
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Shrikhand&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
@@ -20,7 +22,9 @@ body.dark-mode {
   --border-color: #f2ede4;
 }
 
-/* --- BASE STYLES --- */
+/* ==========================================================================
+   GRUNDSTYLER & LAYOUT
+   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -31,7 +35,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-mono);
-  padding: 2rem 5vw; /* Använder hela bredden med skön marginal */
+  padding: 2rem 5vw; /* Skapar lagom med marginal på sidorna */
   line-height: 1.5;
   font-size: 0.9rem;
   width: 100%;
@@ -39,14 +43,14 @@ body {
   margin: 0;
 }
 
-/* Huvudbehållaren ska ta full bredd */
+/* Huvudbehållaren som centrerar och sätter maxbredd på innehållet */
 main {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Tvinga sektionerna att bredda ut sig */
+/* Se till att sektionerna använder hela den tillgängliga bredden */
 .asymmetric-section,
 .hero-split,
 .portfolio-grid,
@@ -55,7 +59,9 @@ main {
   width: 100%;
 }
 
-/* --- NAVIGATION --- */
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -88,7 +94,9 @@ main {
   cursor: pointer;
 }
 
-/* --- HERO SECTION --- */
+/* ==========================================================================
+   HERO SEKTION
+   ========================================================================== */
 .hero-split {
   margin-bottom: 5rem;
 }
@@ -108,7 +116,9 @@ main {
   color: var(--text-muted);
 }
 
-/* --- SECTION HEADINGS --- */
+/* ==========================================================================
+   RUBRIKER FÖR SEKTIONER
+   ========================================================================== */
 .asymmetric-section {
   border-top: 2px solid var(--border-color);
   padding-top: 3rem;
@@ -131,7 +141,9 @@ main {
   letter-spacing: 0.5px;
 }
 
-/* --- PORTFOLIO & MEDIA GRIDS --- */
+/* ==========================================================================
+   PORTFOLIO & MEDIA GRIDS (KORT & BILDER)
+   ========================================================================== */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -157,6 +169,8 @@ main {
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .project-item:hover,
@@ -177,43 +191,7 @@ main {
 }
 
 .project-img-wrapper img,
-.media-img-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* MEDIA CONTENT STYLING */
-.media-type {
-  display: inline-block;
-  background: var(--border-color);
-  color: var(--bg-color);
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  text-transform: uppercase;
-  font-weight: bold;
-  align-self: flex-start;
-  margin-bottom: 0.5rem;
-}
-
-.media-card h3, 
-.project-meta h3 {
-  font-size: 1.2rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-}
-
-.media-creator {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.media-link {
-  margin-top: 1rem;
-  color: var(--text-color);
-  font-weight: bold;
-  text-decoration: underline;
-  font-size: 0.85rem;
-}
+.media-img-wrapper img,
+.media-card img {
+  width: 100% !important;
+  max-width:
