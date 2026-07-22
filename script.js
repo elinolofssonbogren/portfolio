@@ -182,7 +182,7 @@ function visaMedia(lista) {
   mediaContainer.innerHTML = mediaHTML || '<p>Ingen media hittades i denna kategori.</p>';
 }
 
-function filtreraMedia(kategori) {
+function filtreraMedia(event,kategori) {
   // Uppdatera aktiv knapp
   const knappar = document.querySelectorAll('.filter-btn');
   knappar.forEach(btn => btn.classList.remove('active'));
