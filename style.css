@@ -1,15 +1,15 @@
 /* --- GOOGLE FONTS --- */
-@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --bg-color: #f2ede4;         /* Varm creme/papyrus */
+  --bg-color: #f2ede4;          /* Varm creme/papyrus */
   --card-bg: #ffffff;
   --text-color: #1a1a1a;
   --text-muted: #767268;
-  --accent-pink: #f192b3;      /* Bubbelgumrosa från referensen */
+  --accent-pink: #f192b3;       /* Bubbelgumrosa från referensen */
   --border-color: #1a1a1a;
   --font-mono: 'Space Mono', monospace;
-  --font-display: 'Fredoka', cursive;
+  --font-display: 'Shrikhand', cursive; /* Bubblig retro-font för rubriker */
 }
 
 body.dark-mode {
@@ -31,9 +31,28 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-mono);
-  padding: 2rem 4rem;
+  padding: 2rem 5vw; /* Använder hela bredden med skön marginal */
   line-height: 1.5;
   font-size: 0.9rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* Huvudbehållaren ska ta full bredd */
+main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tvinga sektionerna att bredda ut sig */
+.asymmetric-section,
+.hero-split,
+.portfolio-grid,
+#media-grid,
+.media-grid {
+  width: 100%;
 }
 
 /* --- NAVIGATION --- */
@@ -112,14 +131,19 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* --- PORTFOLIO & MEDIA GRIDS (3 KOLUMNER) --- */
-.portfolio-grid,
+/* --- PORTFOLIO & MEDIA GRIDS --- */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 2.5rem;
+}
+
 #media-grid,
 .media-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2.5rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 /* KORT-DESIGN: Tjock ram + Hård skugga */
@@ -192,128 +216,4 @@ body {
   font-weight: bold;
   text-decoration: underline;
   font-size: 0.85rem;
-}
-
-/* --- ANSLAGSTAVLA / GUESTBOOK --- */
-#guestbook-form {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-#guest-input {
-  padding: 0.8rem;
-  background: transparent;
-  border: 2px solid var(--border-color);
-  color: var(--text-color);
-  font-family: var(--font-mono);
-  flex: 1;
-}
-
-#guestbook-form button {
-  background: var(--border-color);
-  color: var(--bg-color);
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-family: var(--font-mono);
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.notes-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.note {
-  background: var(--card-bg);
-  border: 2px solid var(--border-color);
-  padding: 0.8rem 1.2rem;
-  box-shadow: 3px 3px 0px var(--border-color);
-}
-
-/* --- KONTAKT & FOOTER --- */
-.contact-block {
-  border-top: 2px solid var(--border-color);
-  padding-top: 4rem;
-  margin-top: 4rem;
-}
-
-.contact-block h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  color: var(--accent-pink);
-  margin-bottom: 1.5rem;
-}
-
-.contact-actions {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  margin-top: 1.5rem;
-}
-
-.insta-pill, .email-btn {
-  color: var(--text-color);
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-footer {
-  margin-top: 5rem;
-  border-top: 2px solid var(--border-color);
-  padding-top: 2rem;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-}
-
-/* RESPONSIVITET FÖR MOBIL */
-@media (max-width: 768px) {
-  body {
-    padding: 1.5rem;
-  }
-  .portfolio-grid, #media-grid, .media-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Se till att hela sidan får använda hela bredden */
-body {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 2rem 5vw; /* Ger lagom marginal på sidorna */
-}
-
-/* Huvudbehållaren ska ta full bredd */
-main {
-  width: 100%;
-  max-width: 1200px; /* Eller 1400px om du vill ha ännu bredare */
-  margin: 0 auto;
-}
-
-/* Tvinga sektionerna att bredda ut sig */
-.asymmetric-section,
-.hero-split,
-.portfolio-grid,
-#media-grid,
-.media-grid {
-  width: 100%;
-}
-
-/* Sätt upp Media-sektionen i ett snyggt grid som fyller ut bredden */
-#media-grid,
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Minst 320px per kort, fyller ut resten */
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-/* Projekt-grid (t.ex. dina bilder högre upp) */
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 2.5rem;
 }
