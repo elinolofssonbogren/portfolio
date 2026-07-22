@@ -182,7 +182,15 @@ function visaMedia(lista) {
   mediaContainer.innerHTML = mediaHTML || '<p>Ingen media hittades i denna kategori.</p>';
 }
 
-function filtreraMedia(event,kategori) {
+// Mappar olika "TYP AV MEDIA"-värden från CMS:et till filterkategorierna.
+// Lägg till fler synonymer här om du lägger till nya typer i admin-panelen.
+const KATEGORI_SYNONYMER = {
+  bok: ['bok', 'böcker', 'book'],
+  podd: ['podd', 'poddar', 'podcast'],
+  film: ['film', 'youtube', 'video', 'vimeo', 'netflix', 'serie', 'tv']
+};
+
+function filtreraMedia(event, kategori) {
   // Uppdatera aktiv knapp
   const knappar = document.querySelectorAll('.filter-btn');
   knappar.forEach(btn => btn.classList.remove('active'));
@@ -191,9 +199,10 @@ function filtreraMedia(event,kategori) {
   if (kategori === 'alla') {
     visaMedia(allMediaData);
   } else {
+    const synonymer = KATEGORI_SYNONYMER[kategori] || [kategori];
     const filtrerad = allMediaData.filter(item => {
       const typ = (item.type || '').toLowerCase();
-      return typ.includes(kategori);
+      return synonymer.some(s => typ.includes(s));
     });
     visaMedia(filtrerad);
   }
