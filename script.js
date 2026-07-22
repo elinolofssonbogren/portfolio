@@ -1,7 +1,18 @@
 let allMediaData = []; // Sparar all data för filtrering
 
+/* ==========================================
+   TEMA (SPARAS I LOCALSTORAGE)
+   ========================================== */
 function skiftaTema() {
-  document.body.classList.toggle("dark-mode");
+  const arMorkt = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("tema", arMorkt ? "dark" : "light");
+}
+
+function laddaTema() {
+  const sparatTema = localStorage.getItem("tema");
+  if (sparatTema === "dark") {
+    document.body.classList.add("dark-mode");
+  }
 }
 
 /* ==========================================
@@ -13,10 +24,9 @@ function laggTillHalsning(event) {
   const input = document.getElementById("guest-input");
   if (input.value.trim() !== "") {
     const txt = input.value.trim();
-    
+
     skapaNoteElement(txt);
 
-    // Spara i LocalStorage
     const sparade = JSON.parse(localStorage.getItem("guestbook")) || [];
     sparade.unshift(txt);
     localStorage.setItem("guestbook", JSON.stringify(sparade));
@@ -40,16 +50,55 @@ function laddaGuestbook() {
 }
 
 /* ==========================================
+   CACHAD FETCH (MINSKAR RISKEN FÖR
+   GITHUB API RATE-LIMITING)
+   ========================================== */
+const CACHE_TID_MS = 10 * 60 * 1000; // 10 minuter
+
+async function cachadFetch(url) {
+  const cacheKey = `cache:${url}`;
+  let cachat = null;
+  try {
+    cachat = JSON.parse(localStorage.getItem(cacheKey) || "null");
+  } catch (e) {
+    cachat = null;
+  }
+
+  if (cachat && (Date.now() - cachat.tid) < CACHE_TID_MS) {
+    return cachat.data;
+  }
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    if (cachat) return cachat.data; // hellre gammal data än ingen alls
+    throw new Error(`Fetch misslyckades: ${url}`);
+  }
+
+  const data = await res.json();
+  try {
+    localStorage.setItem(cacheKey, JSON.stringify({ tid: Date.now(), data }));
+  } catch (e) {
+    // localStorage kan vara full/blockerad - inte kritiskt
+  }
+  return data;
+}
+
+/* ==========================================
    LADDA SIDINNEHÅLL
    ========================================== */
 async function laddaSidinnehall() {
+  laddaTema();
+
   try {
     const res = await fetch('/content/index.json');
     if (res.ok) {
       const data = await res.json();
       if (data.title) document.querySelector('.hero-scrapbook h1').textContent = data.title;
       if (data.subtitle) document.querySelector('.hero-subtext').textContent = data.subtitle;
-      if (data.intro) document.querySelector('.handwritten-intro').textContent = data.intro;
+      if (data.intro) {
+        const introEl = document.querySelector('.handwritten-intro');
+        if (introEl) introEl.textContent = data.intro;
+      }
     }
   } catch (err) {
     console.log("Kunde inte ladda statisk text.");
@@ -65,10 +114,7 @@ async function laddaProjekt() {
   if (!gridContainer) return;
 
   try {
-    const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/projects');
-    if (!res.ok) return;
-
-    const files = await res.json();
+    const files = await cachadFetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/projects');
     let projectsHTML = '';
 
     for (const file of files) {
@@ -91,10 +137,12 @@ async function laddaProjekt() {
           continue;
         }
 
+        const bildUrl = p.image || 'https://picsum.photos/700/500';
+
         projectsHTML += `
           <article class="project-item">
               <div class="project-img-wrapper">
-                  <img src="${p.image || 'https://picsum.photos/700/500'}" alt="${p.title || 'Projekt'}">
+                  <img src="${bildUrl}" alt="${p.title || 'Projekt'}" onerror="this.closest('.project-img-wrapper').classList.add('bild-saknas'); this.remove();">
               </div>
               <div class="project-meta">
                   <h3>${p.title || 'Utan titel'}</h3>
@@ -119,10 +167,7 @@ async function laddaMedia() {
   if (!mediaContainer) return;
 
   try {
-    const res = await fetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/media');
-    if (!res.ok) return;
-
-    const files = await res.json();
+    const files = await cachadFetch('https://api.github.com/repos/elinolofssonbogren/portfolio/contents/content/media');
     allMediaData = [];
 
     for (const file of files) {
@@ -169,7 +214,7 @@ function visaMedia(lista) {
 
     mediaHTML += `
       <div class="media-card" data-type="${(item.type || '').toLowerCase()}">
-        ${harGiltigBild ? `<div class="media-img-wrapper"><img src="${item.image}" alt="${item.title || 'Media'}"></div>` : ''}
+        ${harGiltigBild ? `<div class="media-img-wrapper"><img src="${item.image}" alt="${item.title || 'Media'}" onerror="this.closest('.media-img-wrapper').remove();"></div>` : ''}
         <span class="media-type">${item.type || 'Media'}</span>
         <h3>${item.title || 'Utan titel'}</h3>
         ${item.creator ? `<p class="media-creator">Av: ${item.creator}</p>` : ''}
@@ -191,7 +236,6 @@ const KATEGORI_SYNONYMER = {
 };
 
 function filtreraMedia(event, kategori) {
-  // Uppdatera aktiv knapp
   const knappar = document.querySelectorAll('.filter-btn');
   knappar.forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
