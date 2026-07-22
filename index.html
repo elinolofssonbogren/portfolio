@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elin Olofsson Bogren — Portfolio</title>
     
+    <meta name="description" content="Elin Olofsson Bogren — Portfolio inom design, teknik och kreativ problemlösning.">
+    <meta name="author" content="Elin Olofsson Bogren">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://din-doman.netlify.app/">
+    <meta property="og:title" content="Elin Olofsson Bogren — Portfolio">
+    <meta property="og:description" content="Kika in i mitt digitala arkiv av design, kod och inspiration.">
+    <meta property="og:image" content="https://picsum.photos/1200/630">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="favicon.png" type="image/png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -73,8 +83,7 @@
                     <button type="submit">SKICKA</button>
                 </form>
                 <div id="notes-container" class="notes-container">
-                    <div class="note">Välkommen till mitt digitala arkiv!</div>
-                </div>
+                    </div>
             </div>
         </section>
 
@@ -83,6 +92,14 @@
                 <span>(03)</span>
                 <h2>MEDIA & INSPIRATION</h2>
             </div>
+            
+            <div id="media-filter" class="filter-container">
+                <button class="filter-btn active" onclick="filtreraMedia('alla')">ALLT</button>
+                <button class="filter-btn" onclick="filtreraMedia('bok')">BÖCKER</button>
+                <button class="filter-btn" onclick="filtreraMedia('podd')">PODDAR</button>
+                <button class="filter-btn" onclick="filtreraMedia('film')">FILM/VIDEO</button>
+            </div>
+
             <div class="section-content">
                 <div id="media-grid" class="media-grid"></div>
             </div>
@@ -96,35 +113,4 @@
                 <a href="https://instagram.com/arkiv.beo" target="_blank" rel="noopener noreferrer" class="insta-pill">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                    @arkiv.beo
-                </a>
-
-                <a href="mailto:elinbogren@icloud.com" class="email-btn">
-                    elinbogren@icloud.com
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        ELIN OLOFSSON BOGREN DESIGN, KOD & TEKNIK
-    </footer>
-
-    <script src="script.js"></script>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
-</body>
-</html>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11
