@@ -80,8 +80,9 @@
                 <h2>ANSLAGSTAVLA</h2>
             </div>
             <div class="section-content">
-                <form id="guestbook-form" onsubmit="laggTillHalsning(event)">
-                    <input type="text" id="guest-input" placeholder="Lämna en tanke..." required>
+                <form id="guestbook-form" onsubmit="skickaKommentar(event, null)">
+                    <input type="text" id="guest-name" class="comment-name-input" placeholder="Ditt namn (valfritt)">
+                    <input type="text" id="guest-input" class="comment-text-input" placeholder="Lämna en tanke..." required>
                     <button type="submit">SKICKA</button>
                 </form>
                 <div id="notes-container" class="notes-container">
@@ -131,6 +132,7 @@
         ELIN OLOFSSON BOGREN DESIGN, KOD &amp; TEKNIK
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
