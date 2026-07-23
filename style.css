@@ -256,21 +256,30 @@ main {
 }
 
 /* ==========================================================================
-   ANSLAGSTAVLA / GUESTBOOK
+   ANSLAGSTAVLA / KOMMENTARSFLÖDE
    ========================================================================== */
 #guestbook-form {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
-#guest-input {
+.comment-name-input,
+.comment-text-input {
   padding: 0.8rem;
   background: transparent;
   border: 2px solid var(--border-color);
   color: var(--text-color);
   font-family: var(--font-mono);
-  flex: 1;
+}
+
+#guest-name.comment-name-input {
+  flex: 0 1 200px;
+}
+
+#guest-input.comment-text-input {
+  flex: 1 1 300px;
 }
 
 #guestbook-form button {
@@ -285,15 +294,89 @@ main {
 
 .notes-container {
   display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.comment {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  padding: 1rem 1.2rem;
+  box-shadow: 3px 3px 0px var(--border-color);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
   flex-wrap: wrap;
+}
+
+.comment-name {
+  font-weight: bold;
+}
+
+.comment-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.comment-text {
+  margin-bottom: 0.6rem;
+  word-break: break-word;
+}
+
+.reply-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  text-decoration: underline;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.reply-btn:hover {
+  color: var(--text-color);
+}
+
+.comment-replies {
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
-.note {
-  background: var(--card-bg);
-  border: 2px solid var(--border-color);
-  padding: 0.8rem 1.2rem;
-  box-shadow: 3px 3px 0px var(--border-color);
+.reply-form {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.reply-form .comment-name-input {
+  flex: 0 1 150px;
+}
+
+.reply-form .comment-text-input {
+  flex: 1 1 150px;
+}
+
+.reply-form button {
+  background: var(--border-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.75rem;
 }
 
 /* ==========================================================================
