@@ -1,3 +1,15 @@
+/* ==========================================
+   SUPABASE-KONFIGURATION
+   Klistra in dina egna värden från
+   Supabase → Settings → API
+   ========================================== */
+const SUPABASE_URL = "https://sktumupwkhqqiziaylqw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrdHVtdXB3a2hxcWl6aWF5bHF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MDk1OTEsImV4cCI6MjEwMDM4NTU5MX0.A9uDk0fcEDBED2CJgvN7ijczh_mjEV82Mo1idkLta5k";
+
+const supabaseClient = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
 let allMediaData = []; // Sparar all data för filtrering
 
 /* ==========================================
@@ -16,37 +28,140 @@ function laddaTema() {
 }
 
 /* ==========================================
-   ANSLAGSTAVLA (LOCALSTORAGE)
+   HJÄLPFUNKTIONER
    ========================================== */
-function laggTillHalsning(event) {
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+
+function formatDatum(isoString) {
+  const d = new Date(isoString);
+  return d.toLocaleString('sv-SE', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+/* ==========================================
+   ANSLAGSTAVLA / KOMMENTARSFLÖDE (SUPABASE)
+   ========================================== */
+async function laddaGuestbook() {
+  const container = document.getElementById('notes-container');
+  if (!container) return;
+
+  if (!supabaseClient) {
+    container.innerHTML = '<p>Kommentarsfunktionen är inte konfigurerad än.</p>';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('comments')
+    .select('*')
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.log('Kunde inte hämta kommentarer:', error);
+    container.innerHTML = '<p>Kunde inte ladda kommentarer just nu. Försök igen om en liten stund.</p>';
+    return;
+  }
+
+  const trad = byggKommentarstrad(data || []);
+  const rootsNyastForst = trad.slice().reverse();
+
+  container.innerHTML = rootsNyastForst.length > 0
+    ? rootsNyastForst.map(renderKommentar).join('')
+    : '<p>Bli den första att skriva något!</p>';
+}
+
+function byggKommentarstrad(kommentarer) {
+  const map = {};
+  const roots = [];
+
+  kommentarer.forEach(k => { k.svar = []; map[k.id] = k; });
+  kommentarer.forEach(k => {
+    if (k.parent_id && map[k.parent_id]) {
+      map[k.parent_id].svar.push(k);
+    } else if (!k.parent_id) {
+      roots.push(k);
+    }
+  });
+
+  return roots;
+}
+
+function renderKommentar(k) {
+  const namn = k.name && k.name.trim() !== '' ? escapeHtml(k.name) : 'Anonym';
+  const text = escapeHtml(k.text);
+  const svarHTML = (k.svar || []).map(renderKommentar).join('');
+
+  return `
+    <div class="comment" data-id="${k.id}">
+      <div class="comment-header">
+        <span class="comment-name">${namn}</span>
+        <span class="comment-date">${formatDatum(k.created_at)}</span>
+      </div>
+      <p class="comment-text">${text}</p>
+      <button type="button" class="reply-btn" onclick="visaSvarsformular(event, ${k.id})">Svara</button>
+      <div class="reply-form-slot" id="reply-form-${k.id}"></div>
+      ${svarHTML ? `<div class="comment-replies">${svarHTML}</div>` : ''}
+    </div>
+  `;
+}
+
+function visaSvarsformular(event, parentId) {
+  const slot = document.getElementById(`reply-form-${parentId}`);
+  if (!slot) return;
+
+  // Om formuläret redan är öppet, stäng det (toggle)
+  if (slot.innerHTML.trim() !== '') {
+    slot.innerHTML = '';
+    return;
+  }
+
+  slot.innerHTML = `
+    <form class="reply-form" onsubmit="skickaKommentar(event, ${parentId})">
+      <input type="text" class="comment-name-input" placeholder="Ditt namn (valfritt)">
+      <input type="text" class="comment-text-input" placeholder="Skriv ett svar..." required>
+      <button type="submit">SVARA</button>
+    </form>
+  `;
+}
+
+async function skickaKommentar(event, parentId) {
   event.preventDefault();
 
-  const input = document.getElementById("guest-input");
-  if (input.value.trim() !== "") {
-    const txt = input.value.trim();
-
-    skapaNoteElement(txt);
-
-    const sparade = JSON.parse(localStorage.getItem("guestbook")) || [];
-    sparade.unshift(txt);
-    localStorage.setItem("guestbook", JSON.stringify(sparade));
-
-    input.value = "";
+  if (!supabaseClient) {
+    alert('Kommentarsfunktionen är inte konfigurerad än.');
+    return;
   }
-}
 
-function skapaNoteElement(text) {
-  const container = document.getElementById("notes-container");
-  if (!container) return;
-  const newNote = document.createElement("div");
-  newNote.className = "note";
-  newNote.textContent = text;
-  container.prepend(newNote);
-}
+  const form = event.target;
+  const namnInput = form.querySelector('.comment-name-input');
+  const textInput = form.querySelector('.comment-text-input');
+  const namn = namnInput.value.trim();
+  const text = textInput.value.trim();
 
-function laddaGuestbook() {
-  const sparade = JSON.parse(localStorage.getItem("guestbook")) || ["Välkommen till mitt digitala arkiv!"];
-  sparade.reverse().forEach(text => skapaNoteElement(text));
+  if (text === '') return;
+
+  const { error } = await supabaseClient.from('comments').insert({
+    name: namn || null,
+    text: text,
+    parent_id: parentId
+  });
+
+  if (error) {
+    console.log('Kunde inte spara kommentar:', error);
+    alert('Något gick fel när kommentaren skulle sparas. Försök igen om en liten stund.');
+    return;
+  }
+
+  form.reset();
+  laddaGuestbook();
 }
 
 /* ==========================================
